@@ -1,0 +1,67 @@
+   1.dataset1.csv
+
+
+   為處理過後的資料，前 210763 筆樣本為 traing set，之下為 testing set，共 1311 項變數。
+
+   P_XXX 和 C_XXX 分別代表來自 Policy 和 Claim 的變數。
+
+   ( Policy : 保單，每人至少 1 張以上 ； Claim : 出險，大部分的人都沒有 )   
+
+   
+
+   連續型變數為前 29 項，包含 Policy 與 Claim 的連續型變數( 日期已轉換，算至 07/2018 )，
+   
+   用平均數整合( 標記為 P_XXX_mean  C_XXX_mean )。
+
+   以及自行增加 6 個變數 : 
+
+   C_Counts : 該客戶 Claim 的數量 ( 亦即 Claim 資料中 Policy_Number 的 Count，不存在則紀錄為 0)
+   
+   P_Counts : 該客戶 Policy 的數量 ( 亦即 Policy 資料中 Policy_Number 的 Count )
+   
+   Claim_per_Policy : C_Counts/P_Counts
+
+   Total_Premium : 該客戶先前保費總額 ( P_Premium_mean *  P_Counts)
+
+   Total_Deductible : 該客戶先前自負總額 ( C_Deductible_mean * C_Counts )
+
+   Quit(類別型 ) : 是否退保( 退保標記為1)，P_Coverage_Deductible_if_applied_mean < 0 代表退保。
+
+
+
+   類別型變數經 get_dummies 轉為數值型( 共 1282 項 )，其中刪除太多種類的變數 ( 該變數下沒有一個種類占樣本的 5% 以上 )
+ 
+   刪除的有 :
+   
+   Claim : Vehicle_identifier
+
+   Policy : Vehicle_identifier  
+   
+   Policy : Vehicle_Make_and_Model2
+
+   Policy : Coding_of_Vehicle_Branding_&_Type
+
+   Policy : aassured_zip
+
+
+   轉為數值型後，aggregation 的方式為 sum ( P_XXX_sum  C_XXX_sum )。
+
+
+
+   以上資料皆無補遺漏值，除 Claim 中 Paid_Loss_Amount、paid_Expenses_Amount、Salvage_or_Subrogation?、
+
+   At_Fault?、Deductible，遺漏的部分補 0 。 
+
+   
+   
+
+  
+    
+
+   
+
+   
+
+   
+
+   
